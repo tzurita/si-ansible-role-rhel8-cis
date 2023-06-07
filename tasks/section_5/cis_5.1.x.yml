@@ -96,12 +96,46 @@
       - rule_5.1.6
 
 - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured"
-  ansible.builtin.file:
-      path: /etc/cron.d
-      state: directory
-      owner: root
-      group: root
-      mode: 0700
+  block:
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Set initial cron.d permissions"
+        ansible.builtin.file:
+            path: /etc/cron.d
+            state: directory
+            owner: root
+            group: root
+            mode: 0700
+
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Install required post action package"
+        ansible.builtin.yum:
+            name: 'python3-dnf-plugin-post-transaction-actions'
+            state: present
+            disablerepo: '*'
+            enablerepo: 'rhel*'
+
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Create postaction directory"
+        ansible.builtin.file:
+            name: '/etc/dnf/plugins/post-transaction-actions.d'
+            state: directory
+            owner: root
+            group: root
+            mode: 750
+
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Copy cronie action"
+        ansible.builtin.copy:
+            src: 'etc/dnf/plugins/post-transaction-actions.d/cronieperm.action'
+            dest: '/etc/dnf/plugins/post-transaction-actions.d/cronieperm.action'
+            owner: root
+            group: root
+            mode: 750
+
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Create cronieaction script"
+        ansible.builtin.file:
+            src: 'etc/dnf/plugins/post-transaction-actions.d/cronieperm'
+            dest: '/usr/local/bin/cronieperm'
+            owner: root
+            group: root
+            mode: 750
+
   when:
       - rhel8cis_rule_5_1_7
   tags:

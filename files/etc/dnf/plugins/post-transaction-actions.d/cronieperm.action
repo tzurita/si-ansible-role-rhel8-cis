@@ -1,0 +1,1 @@
+cronie:any:/usr/local/bin/cronieperm ;echo “Cronie CIS hardening”

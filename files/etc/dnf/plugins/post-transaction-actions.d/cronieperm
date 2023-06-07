@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Set permissions of /etc/crontab
+chmod 600 /etc/crontab
+
+# Set permissions of /etc/cron.d
+chmod 700 /etc/cron.d
+
+# Set permissions of /etc/cron.hourly, /etc/cron.daily, /etc/cron.weekly, and /etc/cron.monthly
+chmod 700 /etc/cron.hourly
+chmod 700 /etc/cron.daily
+chmod 700 /etc/cron.weekly
+chmod 700 /etc/cron.monthly
