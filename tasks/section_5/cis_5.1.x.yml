@@ -118,23 +118,23 @@
             state: directory
             owner: root
             group: root
-            mode: 750
+            mode: 0750
 
       - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Copy cronie action"
         ansible.builtin.copy:
-            src: '{{ role_path }}/files/etc/dnf/plugins/post-transaction-actions.d/cronieperm.action'
-            dest: '/etc/dnf/plugins/post-transaction-actions.d/cronieperm.action'
+            src: etc/dnf/plugins/post-transaction-actions.d/cronieperm.action
+            dest: /etc/dnf/plugins/post-transaction-actions.d/cronieperm.action
             owner: root
             group: root
-            mode: 750
+            mode: 0750
 
-      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Create cronieaction script"
-        ansible.builtin.file:
-            src: '{{ role_path }}/files/usr/local/bin/cronieperm'
-            dest: '/usr/local/bin/cronieperm'
+      - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Copy cronieaction script"
+        ansible.builtin.copy:
+            src: usr/local/bin/cronieperm
+            dest: /usr/local/bin/cronieperm
             owner: root
             group: root
-            mode: 750
+            mode: 0750
 
   when:
       - rhel8cis_rule_5_1_7
