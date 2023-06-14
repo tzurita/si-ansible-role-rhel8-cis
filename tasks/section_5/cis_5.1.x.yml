@@ -130,7 +130,7 @@
 
       - name: "5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured | Create cronieaction script"
         ansible.builtin.file:
-            src: 'etc/dnf/plugins/post-transaction-actions.d/cronieperm'
+            src: 'usr/local/bin/cronieperm'
             dest: '/usr/local/bin/cronieperm'
             owner: root
             group: root
